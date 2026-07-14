@@ -1,0 +1,91 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table subscriptions {
+  id integer [primary key]
+  user_id integer [not null]
+  service_id integer [not null]
+  subscription_status enum
+  amount decimal
+  currency varchar
+  billing_cycle enum
+  next_renewal timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table users {
+  id integer [primary key]
+  email varchar [unique]
+  fullname varchar
+  hash_password varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table payments {
+  id integer [primary key]
+  subscription_id integer [not null]
+  amount decimal
+  currency varchar
+  user_id integer [not null]
+  payment_status enum
+  payment_provider varchar
+  transaction_reference varchar [unique]
+  paid_at timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table services {
+  id integer [primary key]
+  name varchar [unique]
+  logo_url varchar
+  website varchar
+  category varchar
+}
+
+Enum subscription_status {
+  active
+  cancelled
+  expired
+}
+
+Enum payment_status {
+  pending
+  successful
+  failed
+  refunded
+}
+
+Enum billing_cycle {
+  monthly
+  quarterly
+  annually
+}
+
+Ref: subscriptions.service_id > services.id
+Ref: subscriptions.user_id > users.id
+Ref: payments.user_id > users.id
+Ref: payments.subscription_id > subscriptions.id
+
+Records users(id, email) {
+  0, 'Alice@email.com'
+  1, 'Bob@email.com'
+  2, 'Candice@email.com'
+  3, 'David@email.com'
+}
+Records services(id, name){
+    301, 'Netflix'
+    302, 'Spotify'
+}
+
+Records subscriptions(id, user_id, service_id) {
+  101, 0, 301
+  102, 1, 302
+}
+Records payments(id, user_id, subscription_id, amount, payment_status) {
+  201, 0, 101, 10000, 'successful'
+  202, 1, 102, 50000, 'successful'
+}
+
