@@ -41,8 +41,7 @@ Table services {
   id integer [primary key]
   name varchar [unique]
   logo_url varchar
-  website varchar
-  category varchar
+  category enum
 }
 
 Enum subscription_status {
@@ -62,6 +61,18 @@ Enum billing_cycle {
   monthly
   quarterly
   annually
+}
+
+Enum category {
+  entertainment
+  productivitity
+  ai tools
+  design
+  education
+  communication
+  health and fitness
+  gaming
+  business
 }
 
 Ref: subscriptions.service_id > services.id
