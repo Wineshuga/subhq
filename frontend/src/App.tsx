@@ -1,12 +1,26 @@
-function App() {
+import { createBrowserRouter } from "react-router-dom";
+import Landing from "./pages/landing/Landing";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import LandingIndex from "./pages/landing/LandingIndex";
 
-  return (
-    <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </>
-  )
-}
-
-export default App
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingIndex />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
+]);
