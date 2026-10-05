@@ -1,16 +1,44 @@
-## SubHQ
+# SubLinkHQ Frontend
 
-### Development
+The frontend application for SubLinkHQ, built with Next.js.
 
-- Clone repository
+## Tech Stack
 
-```bash
-    git clone https://github.com/wineshuga/subhq
+* React Vite
+* TypeScript
+* Docker
+
+## Project Structure
+
+```text
+frontend/
+├── app/
+├── public/
+├── package.json
+├── Dockerfile
+└── ...
 ```
 
-- Run server
+## Running with Docker
+
+From the project root:
 
 ```bash
-  cd frontend
-  npm run dev
+docker compose --env-file ./backend/.env up --build frontend
 ```
+
+The application will be available at:
+
+```text
+http://localhost:5173
+```
+
+## Running the Full Application
+
+From the project root:
+
+```bash
+docker compose --env-file ./backend/.env up --build
+```
+
+This starts the frontend, backend, and PostgreSQL services.
